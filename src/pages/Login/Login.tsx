@@ -15,18 +15,22 @@ import { Redirect } from 'react-router';
 import firebase from 'firebase';
 
 const Login: React.FC = () => {
-    const {currentUser} = firebase.auth();
+    const { currentUser } = firebase.auth();
+
+    
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
     const [showToastError, setShowToastError] = useState(false);
     const [toastErrorMessage, setToastErrorMessage] = useState('');
 
-    const [alreadyConnected, setAlereadyConnected] = useState(false)
+    const [alreadyConnected, setAlereadyConnected] = useState(false);
 
     useEffect(() => {
-        setAlereadyConnected(!!currentUser)
-    }, [currentUser])
+        setAlereadyConnected(!!currentUser);
+    }, [currentUser]);
+
+
     const login = async () => {
         try {
             await firebase.auth().signInWithEmailAndPassword(email, password);

@@ -12,7 +12,9 @@ interface MessageListItemProps {
 
 const MessageListItem: React.FC<MessageListItemProps> = ({ message }) => {
     let messageContent = <></>;
-    const date = new Date(message.date).toLocaleDateString()
+    const date = new Date(message.date).toLocaleDateString();
+
+    // En fonction du type de message, on affiche le texte dans un p ou une image
 
     if (isMessageWithContent(message)) {
         messageContent = <p>{message.content}</p>;

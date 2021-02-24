@@ -26,6 +26,7 @@ const Register: React.FC = () => {
 
     const register = async () => {
         try {
+            // On inscrit l'utilisateur
             const credential = await firebase
                 .auth()
                 .createUserWithEmailAndPassword(email, password);
@@ -34,14 +35,20 @@ const Register: React.FC = () => {
                 email,
                 username,
             };
+
+            // On le stock en base pour stocker son nom d'utilisateur
             await firebase
                 .database()
                 .ref('users/' + credential.user?.uid)
                 .set(newUser);
+
+            // On nettoie
             setEmail('');
             setPassword('');
             setUsername('');
+
         } catch (error) {
+            // Si il y'a une erreur, on l'affiche dans petit toast rouge
             setToastErrorMessage(error.message);
             setShowToastError(true);
         }

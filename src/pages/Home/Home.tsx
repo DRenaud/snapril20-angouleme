@@ -24,32 +24,35 @@ import { User } from '../../models/user';
 const Home: React.FC = () => {
     const refMessages = firebase.database().ref('messages');
 
-
     const [messages, setMessages] = useState<Message[]>([]);
 
     const [newTextMessage, setNewTextMessage] = useState('');
     const [currentUser, setCurrentUser] = useState<User>();
 
-
+    /**
+     * @description Fonction utilitaire pour faire déscendre la liste
+     */
     const scrollToBottom = () => {
         let list = document.querySelector('ion-content');
         list?.scrollToBottom();
     };
 
+    // Enregistrement aux changement de la base
     useEffect(() => {
         const register = async () => {
-            // On récupére tous les messages déjà posté
+            // On récupére tous les messages
             refMessages.on('value', (messagesSnapshot) => {
                 const initialMessages: Message[] = [];
-                console.log('Message reçu');
                 // On parcourt chaque noeud de messages (/messages/:id)
                 messagesSnapshot.forEach((messageSnapshot) => {
+                    // et on l'ajoute dans la liste
                     initialMessages.push(messageSnapshot.val());
                 });
                 setMessages(initialMessages);
                 scrollToBottom();
             });
             if (firebase.auth().currentUser) {
+                // On récupére l'utilisateur courant dans la base pour avoir son username
                 await firebase
                     .database()
                     .ref('users/' + firebase.auth().currentUser!.uid)
@@ -57,23 +60,14 @@ const Home: React.FC = () => {
                         setCurrentUser(snapshot.val());
                     });
             }
-
         };
 
         register();
-
+        // Nettoayage de l'abonneemnt, sinon on reçoit les données même si on est sur une autre page
         return () => {
-          refMessages.off();
-        }
-    }, []);
-
-    useIonViewWillEnter(async () => {});
-
-    const refresh = (e: CustomEvent) => {
-        setTimeout(() => {
-            e.detail.complete();
-        }, 3000);
-    };
+            refMessages.off();
+        };
+    }, [refMessages]);
 
     const logout = async () => {
         await firebase.auth().signOut();
@@ -107,23 +101,18 @@ const Home: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonRefresher slot="fixed" onIonRefresh={refresh}>
-                    <IonRefresherContent></IonRefresherContent>
-                </IonRefresher>
-
                 <IonHeader collapse="condense">
                     <IonToolbar>
                         <IonTitle size="large">Inbox</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-
-                <IonList className='list'>
+                <IonList className="list">
                     {messages.map((m) => (
                         <MessageListItem key={m.date} message={m} />
                     ))}
                 </IonList>
             </IonContent>
-            <IonFooter >
+            <IonFooter>
                 <IonTextarea
                     rows={6}
                     cols={20}

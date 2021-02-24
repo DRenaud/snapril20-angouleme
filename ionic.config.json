@@ -1,0 +1,7 @@
+{
+  "name": "snapril20-angouleme",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

@@ -20,6 +20,7 @@ import firebase from 'firebase';
 import { Redirect } from 'react-router';
 import { Message, MessageWithContent } from '../../models/message';
 import { User } from '../../models/user';
+import useNotification from '../../hooks/useNotification';
 
 const Home: React.FC = () => {
     const refMessages = firebase.database().ref('messages');
@@ -28,6 +29,8 @@ const Home: React.FC = () => {
 
     const [newTextMessage, setNewTextMessage] = useState('');
     const [currentUser, setCurrentUser] = useState<User>();
+
+    const { register: registerNotification } = useNotification(firebase.auth().currentUser!.uid!);
 
     /**
      * @description Fonction utilitaire pour faire déscendre la liste
@@ -63,11 +66,13 @@ const Home: React.FC = () => {
         };
 
         register();
+        registerNotification();
         // Nettoayage de l'abonneemnt, sinon on reçoit les données même si on est sur une autre page
         return () => {
             refMessages.off();
         };
-    }, [refMessages]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const logout = async () => {
         await firebase.auth().signOut();

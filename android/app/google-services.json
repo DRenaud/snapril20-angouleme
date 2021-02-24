@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "82749596091",
+    "firebase_url": "https://snapril-20-angouleme-default-rtdb.firebaseio.com",
+    "project_id": "snapril-20-angouleme",
+    "storage_bucket": "snapril-20-angouleme.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82749596091:android:3d3d683799188fa55f649e",
+        "android_client_info": {
+          "package_name": "com.damienrenaud.snapril20angouleme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "82749596091-l9jklm9u2vbo4dvt32jcrp8v8jdojev8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjJMGXir3olPE-tID7zQX2kY4riJ_MTtk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "82749596091-l9jklm9u2vbo4dvt32jcrp8v8jdojev8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
